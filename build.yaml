@@ -2,14 +2,19 @@ schedules:
   adhoc:
     schedule: adhoc
 os:
-  - osx/high-sierra
+# Disabled after maintenance/ops problems with our Jenkins OS X env
+# Commented instead of deleted at Jake's request
+#  - osx/high-sierra
   - ubuntu/xenial64
 build:
   - script: |
       echo "OS VERSION ===== $OS_VERSION"
-      if [ "$OS_VERSION" = "osx/high-sierra" ]; then
-         mvn -B clean -DskipTests
-         mvn -B -U -pl transport-native-unix-common,transport-native-kqueue -Partifactory deploy -DskipTests -DaltDeploymentRepository="artifactory::default::https://repo.sjc.dsinternal.org/artifactory/datastax-releases-local"
-      else
-         ./docker-datastax-release.sh 
-      fi
+      ./docker-datastax-release.sh 
+#  - script: |
+#      echo "OS VERSION ===== $OS_VERSION"
+#      if [ "$OS_VERSION" = "osx/high-sierra" ]; then
+#         mvn -B clean -DskipTests
+#         mvn -B -U -pl transport-native-unix-common,transport-native-kqueue -Partifactory deploy -DskipTests -DaltDeploymentRepository="artifactory::default::https://repo.sjc.dsinternal.org/artifactory/datastax-releases-local"
+#      else
+#         ./docker-datastax-release.sh 
+#      fi
